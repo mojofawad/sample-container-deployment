@@ -8,7 +8,7 @@
   "imagePullPolicy": "IfNotPresent",
   "containerBuilder": "docker",
   "kubeContext": "docker-desktop",
-  "outputFormat": "kustomize",
+  "outputFormat": "compose",
   "skipFinalKustomizeGeneration": false,
   "privateRegistryEmail": "aspir8@aka.ms",
   "includeDashboard": true,
