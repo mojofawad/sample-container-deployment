@@ -8,7 +8,6 @@ var api = builder.AddProject<Projects.SampleContainerApp_Api>("api")
 
 builder.AddNpmApp("next-app", "../SampleContainerApp.Web")
     .WithReference(api)
-    .WaitFor(api)
     .WithHttpEndpoint(env: "PORT")
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
