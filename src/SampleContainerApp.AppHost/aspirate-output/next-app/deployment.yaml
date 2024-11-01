@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: next-app
+  labels:
+    app: next-app
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: next-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: next-app
+    spec:
+      containers:
+      - name: next-app
+        image: next-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: next-app-env
+      terminationGracePeriodSeconds: 180

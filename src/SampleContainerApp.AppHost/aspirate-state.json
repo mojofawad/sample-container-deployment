@@ -1,0 +1,34 @@
+{
+  "projectPath": ".",
+  "outputPath": "aspirate-output",
+  "allowClearNamespace": true,
+  "containerImageTags": [
+    "latest"
+  ],
+  "imagePullPolicy": "IfNotPresent",
+  "containerBuilder": "docker",
+  "kubeContext": "docker-desktop",
+  "outputFormat": "kustomize",
+  "skipFinalKustomizeGeneration": false,
+  "privateRegistryEmail": "aspir8@aka.ms",
+  "includeDashboard": true,
+  "useCustomNamespace": false,
+  "secrets": {
+    "salt": "/ew4vXYEmvzqA6bq",
+    "hash": "4l2xump\u002BgrCfbuk91cbAEYSi0bcg4365bAVJ85RlWtE=",
+    "secrets": {
+      "postgres-password": {
+        "value": "/ew4vXYEmvzqA6bqjfLmuazcrBTskDPlTmWKVTaEUUZdI7xE\u002BO2KQ6MCoCRf\u002BiN3AVY="
+      },
+      "postgres": {
+        "POSTGRES_PASSWORD": "/ew4vXYEmvzqA6bqjfLmuazcrBTskDPlTmWKVTaEUUZdI7xE\u002BO2KQ6MCoCRf\u002BiN3AVY="
+      },
+      "pgdb": {},
+      "api": {
+        "ConnectionStrings__pgdb": "/ew4vXYEmvzqA6bqQ4dWrNs8GKrBXFRtYMB66kytaV8SBrVa5PqxcIZ10Q506lozQABs9FiGecW2BCjF6Vt7VPs2QDYfRXJprLjI1OHa6cf/Yfg\u002By6x97wg9GKb482fCN3AVLmj0G7zDoJLnxhEdQ7k7kw=="
+      },
+      "next-app": {}
+    }
+  },
+  "processAllComponents": true
+}

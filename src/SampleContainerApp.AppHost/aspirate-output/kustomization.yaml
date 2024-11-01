@@ -1,0 +1,10 @@
+resources:
+- postgres
+- api
+- next-app
+- dashboard.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+

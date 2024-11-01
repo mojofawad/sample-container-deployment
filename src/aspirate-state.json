@@ -1,0 +1,15 @@
+{
+  "projectPath": ".",
+  "containerImageTags": [
+    "latest"
+  ],
+  "containerBuilder": "docker",
+  "outputFormat": "kustomize",
+  "privateRegistryEmail": "aspir8@aka.ms",
+  "secrets": {
+    "salt": "eZTRWfx9oGHpnAFf",
+    "hash": "yqZHQ5d\u002BQfyI6GOneNeJhcCAtJL4qTbla7N9rcQUhIs=",
+    "secrets": {}
+  },
+  "processAllComponents": true
+}
