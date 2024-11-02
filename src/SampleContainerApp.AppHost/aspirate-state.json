@@ -1,18 +1,19 @@
 {
   "projectPath": ".",
+  "inputPath": "aspirate-output",
   "outputPath": "aspirate-output",
-  "allowClearNamespace": true,
+  "namespace": "sample",
   "containerImageTags": [
     "latest"
   ],
   "imagePullPolicy": "IfNotPresent",
   "containerBuilder": "docker",
   "kubeContext": "docker-desktop",
-  "outputFormat": "compose",
+  "outputFormat": "kustomize",
   "skipFinalKustomizeGeneration": false,
   "privateRegistryEmail": "aspir8@aka.ms",
   "includeDashboard": true,
-  "useCustomNamespace": false,
+  "useCustomNamespace": true,
   "secrets": {
     "salt": "/ew4vXYEmvzqA6bq",
     "hash": "4l2xump\u002BgrCfbuk91cbAEYSi0bcg4365bAVJ85RlWtE=",
@@ -30,5 +31,6 @@
       "next-app": {}
     }
   },
-  "processAllComponents": true
+  "processAllComponents": true,
+  "isRunning": true
 }

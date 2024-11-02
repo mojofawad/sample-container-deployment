@@ -1,8 +1,8 @@
 ﻿import https from 'node:https';
 import http from 'node:http';
-import fetch from 'node-fetch';
+import fetch, { RequestInit } from 'node-fetch';
+import { URL } from 'url';
 
-// Match the exact shape from your .NET API
 interface WeatherForecast {
     date: string;
     temperatureC: number;
@@ -10,7 +10,6 @@ interface WeatherForecast {
     summary: string;
 }
 
-// Create a type guard to validate the response
 function isWeatherForecastArray(data: unknown): data is WeatherForecast[] {
     if (!Array.isArray(data)) return false;
 
@@ -25,29 +24,37 @@ function isWeatherForecastArray(data: unknown): data is WeatherForecast[] {
 }
 
 export async function getWeatherData(): Promise<WeatherForecast[]> {
-    const apiUrl = process.env.services__api__https__0;
-    console.log('API URL:', apiUrl);
+    // Try both HTTPS and HTTP environment variables
+    const apiUrl = process.env.services__api__https__0 || process.env.services__api__http__0;
 
     if (!apiUrl) {
         console.log('Available env vars:', process.env);
-        throw new Error('API URL not configured');
+        throw new Error('No API URL configured in environment variables');
     }
 
-    const url = `${apiUrl}/weatherforecast`;
-    console.log('Fetching from:', url);
+    console.log('API URL:', apiUrl);
 
     try {
-        const useHttps = url.startsWith('https');
-        const agent = useHttps
-            ? new https.Agent({ rejectUnauthorized: false })
-            : new http.Agent();
+        // Parse the URL to determine the protocol
+        const parsedUrl = new URL(`${apiUrl}/weatherforecast`);
+        console.log('Fetching from:', parsedUrl.toString());
 
-        const response = await fetch(url, {
+        const fetchOptions: RequestInit = {
             headers: {
                 'Content-Type': 'application/json',
-            },
-            agent
-        });
+            }
+        };
+
+        // Configure the appropriate agent based on protocol
+        if (parsedUrl.protocol === 'https:') {
+            fetchOptions.agent = new https.Agent({
+                rejectUnauthorized: false // Only use in development
+            });
+        } else if (parsedUrl.protocol === 'http:') {
+            fetchOptions.agent = new http.Agent();
+        }
+
+        const response = await fetch(parsedUrl.toString(), fetchOptions);
 
         if (!response.ok) {
             throw new Error(`API call failed with status: ${response.status} ${response.statusText}`);
@@ -56,7 +63,6 @@ export async function getWeatherData(): Promise<WeatherForecast[]> {
         const data = await response.json();
         console.log('Received data:', data);
 
-        // Validate the response data
         if (!isWeatherForecastArray(data)) {
             console.error('Invalid response data:', data);
             throw new Error('Invalid response format from API');
@@ -64,7 +70,18 @@ export async function getWeatherData(): Promise<WeatherForecast[]> {
 
         return data;
     } catch (error) {
-        console.error('API Error:', error);
+        console.error('API Error:', error instanceof Error ? error.message : 'Unknown error');
         throw error;
+    }
+}
+
+// Optional: Helper function to test the connection
+export async function testApiConnection(): Promise<boolean> {
+    try {
+        await getWeatherData();
+        return true;
+    } catch (error) {
+        console.error('Connection test failed:', error instanceof Error ? error.message : 'Unknown error');
+        return false;
     }
 }

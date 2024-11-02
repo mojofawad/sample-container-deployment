@@ -1,7 +1,10 @@
+namespace: sample
+
 resources:
 - postgres
 - api
 - next-app
+- namespace.yaml
 - dashboard.yaml
 
 generatorOptions:
